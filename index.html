@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Barber&Co — Protótipo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="phone">
+  <div class="notch"></div>
+
+  <!-- ===================== HOME ===================== -->
+  <section id="screen-home" class="screen active">
+    <div class="pole-stripe"></div>
+    <div class="scroll flex-1 px-5 pt-6 pb-4">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <p class="text-xs" style="color:var(--text-dim)">Boa tarde,</p>
+          <h1 class="font-display text-2xl font-semibold">Mateus</h1>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="relative w-10 h-10 rounded-full card flex items-center justify-center">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+            <span class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full" style="background:var(--red)"></span>
+          </button>
+          <div class="w-10 h-10 rounded-full" style="background:linear-gradient(135deg,var(--gold),#7a5c25)"></div>
+        </div>
+      </div>
+
+      <!-- Próximo agendamento -->
+      <div class="card p-4 mb-4 relative overflow-hidden">
+        <p class="text-[11px] uppercase tracking-wider mb-2" style="color:var(--gold)">Seu próximo horário</p>
+        <div class="flex items-center gap-3">
+          <div class="w-14 h-14 rounded-xl bg-cover bg-center flex-shrink-0" style="background:linear-gradient(135deg,#3a3a3a,#1a1a1a)"></div>
+          <div class="flex-1">
+            <p class="font-semibold text-sm">Corte + Barba — Renan</p>
+            <p class="text-xs" style="color:var(--text-dim)">Qui, 10 de jul · 15:30</p>
+          </div>
+        </div>
+        <div class="flex gap-2 mt-4">
+          <button onclick="startReschedule()" class="flex-1 py-2 text-sm btn-ghost">Remarcar</button>
+          <button onclick="openCancelModal()" class="w-10 h-10 flex items-center justify-center btn-ghost">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Banner assinatura -->
+      <div class="rounded-2xl p-4 mb-5 relative overflow-hidden" style="background:linear-gradient(120deg,#2a2115,#0D0D0D 70%); border:1px solid var(--gold)">
+        <p class="font-display text-lg font-semibold" style="color:var(--gold-soft)">Economize até 30%</p>
+        <p class="text-xs mb-3" style="color:var(--text-dim)">Conheça os planos de assinatura</p>
+        <button onclick="goTo('assinatura')" class="text-xs font-semibold px-3 py-1.5 rounded-lg" style="background:var(--gold); color:#141108">Ver planos →</button>
+      </div>
+
+      <!-- Barbeiros disponíveis -->
+      <p class="text-sm font-semibold mb-3">Disponíveis hoje</p>
+      <div class="flex gap-3 mb-6 overflow-x-auto scroll">
+        <div onclick="quickBook('Renan')" class="flex-shrink-0 w-24 text-center cursor-pointer">
+          <div class="w-20 h-20 rounded-full mx-auto mb-2" style="background:linear-gradient(135deg,#4a3a2a,#1a1a1a); border:2px solid var(--gold)"></div>
+          <p class="text-xs font-medium">Renan</p>
+          <p class="text-[10px]" style="color:var(--text-dim)">★ 4.9</p>
+        </div>
+        <div onclick="quickBook('Diego')" class="flex-shrink-0 w-24 text-center cursor-pointer">
+          <div class="w-20 h-20 rounded-full mx-auto mb-2" style="background:linear-gradient(135deg,#2a3a4a,#1a1a1a); border:2px solid var(--border)"></div>
+          <p class="text-xs font-medium">Diego</p>
+          <p class="text-[10px]" style="color:var(--text-dim)">★ 4.8</p>
+        </div>
+        <div onclick="quickBook('Bruno')" class="flex-shrink-0 w-24 text-center cursor-pointer">
+          <div class="w-20 h-20 rounded-full mx-auto mb-2" style="background:linear-gradient(135deg,#3a2a3a,#1a1a1a); border:2px solid var(--border)"></div>
+          <p class="text-xs font-medium">Bruno</p>
+          <p class="text-[10px]" style="color:var(--text-dim)">★ 5.0</p>
+        </div>
+      </div>
+
+      <!-- Serviços -->
+      <p class="text-sm font-semibold mb-3">Nossos serviços</p>
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <div class="card p-3">
+          <p class="text-sm font-semibold">Corte Degradê</p>
+          <p class="font-display text-lg" style="color:var(--gold)">R$ 60</p>
+        </div>
+        <div class="card p-3">
+          <p class="text-sm font-semibold">Barba Navalha</p>
+          <p class="font-display text-lg" style="color:var(--gold)">R$ 45</p>
+        </div>
+        <div class="card p-3">
+          <p class="text-sm font-semibold">Pigmentação</p>
+          <p class="font-display text-lg" style="color:var(--gold)">R$ 50</p>
+        </div>
+        <div class="card p-3">
+          <p class="text-sm font-semibold">Combo Completo</p>
+          <p class="font-display text-lg" style="color:var(--gold)">R$ 95</p>
+        </div>
+      </div>
+
+      <!-- Fidelidade mini -->
+      <div class="card p-4 flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style="background:var(--gold); color:#141108">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+        </div>
+        <div class="flex-1">
+          <p class="text-xs font-semibold">Faltam 2 cortes para seu prêmio</p>
+          <div class="h-1.5 rounded-full mt-1.5" style="background:var(--border)">
+            <div class="h-1.5 rounded-full" style="width:80%; background:var(--gold)"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== AGENDAR ===================== -->
+  <section id="screen-agendar" class="screen">
+    <div class="pole-stripe"></div>
+    <div class="px-5 pt-5 pb-3 flex-shrink-0">
+      <h1 class="font-display text-xl font-semibold mb-4" id="agendar-title">Agendar horário</h1>
+      <!-- Stepper -->
+      <div class="flex items-center" id="stepper">
+        <div class="step-dot current" id="dot-1">1</div>
+        <div class="step-line" id="line-1"></div>
+        <div class="step-dot" id="dot-2">2</div>
+        <div class="step-line" id="line-2"></div>
+        <div class="step-dot" id="dot-3">3</div>
+      </div>
+      <div class="flex justify-between text-[10px] mt-1.5" style="color:var(--text-dim)">
+        <span>Profissional</span><span>Serviço</span><span>Data/Hora</span>
+      </div>
+    </div>
+
+    <div class="scroll flex-1 px-5 pb-3">
+
+      <!-- STEP 1: Profissional -->
+      <div id="step-1" class="step-panel">
+        <div onclick="selectPro('Sem preferência', this)" class="pro-card card p-3 mb-3 flex items-center gap-3 cursor-pointer" style="border-style:dashed">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background:var(--surface2)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div class="flex-1"><p class="text-sm font-semibold">Sem preferência</p><p class="text-xs" style="color:var(--text-dim)">Primeiro horário disponível</p></div>
+        </div>
+        <div onclick="selectPro('Renan', this)" class="pro-card card p-3 mb-3 flex items-center gap-3 cursor-pointer">
+          <div class="w-12 h-12 rounded-full" style="background:linear-gradient(135deg,#4a3a2a,#1a1a1a)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Renan</p><p class="text-xs" style="color:var(--text-dim)">Especialista em navalha · ★ 4.9</p></div>
+          <span class="text-[10px] px-2 py-1 rounded-full" style="background:rgba(178,58,58,.15); color:#e08585">Hoje</span>
+        </div>
+        <div onclick="selectPro('Diego', this)" class="pro-card card p-3 mb-3 flex items-center gap-3 cursor-pointer">
+          <div class="w-12 h-12 rounded-full" style="background:linear-gradient(135deg,#2a3a4a,#1a1a1a)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Diego</p><p class="text-xs" style="color:var(--text-dim)">Degradê e pigmentação · ★ 4.8</p></div>
+        </div>
+        <div onclick="selectPro('Bruno', this)" class="pro-card card p-3 mb-3 flex items-center gap-3 cursor-pointer">
+          <div class="w-12 h-12 rounded-full" style="background:linear-gradient(135deg,#3a2a3a,#1a1a1a)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Bruno</p><p class="text-xs" style="color:var(--text-dim)">Cortes clássicos · ★ 5.0</p></div>
+        </div>
+      </div>
+
+      <!-- STEP 2: Serviço -->
+      <div id="step-2" class="step-panel hidden">
+        <div class="svc-card card p-3 mb-2 flex items-center gap-3 cursor-pointer" data-name="Corte Degradê" data-price="60" data-time="40" onclick="toggleSvc(this)">
+          <div class="w-5 h-5 rounded-md flex-shrink-0 svc-check flex items-center justify-center" style="border:1px solid var(--border)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Corte Degradê</p><p class="text-xs" style="color:var(--text-dim)">⏱ 40 min</p></div>
+          <p class="font-display" style="color:var(--gold)">R$ 60</p>
+        </div>
+        <div class="svc-card card p-3 mb-2 flex items-center gap-3 cursor-pointer" data-name="Barba Navalha" data-price="45" data-time="25" onclick="toggleSvc(this)">
+          <div class="w-5 h-5 rounded-md flex-shrink-0 svc-check flex items-center justify-center" style="border:1px solid var(--border)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Barba Navalha</p><p class="text-xs" style="color:var(--text-dim)">⏱ 25 min</p></div>
+          <p class="font-display" style="color:var(--gold)">R$ 45</p>
+        </div>
+        <div class="svc-card card p-3 mb-2 flex items-center gap-3 cursor-pointer" data-name="Pigmentação" data-price="50" data-time="30" onclick="toggleSvc(this)">
+          <div class="w-5 h-5 rounded-md flex-shrink-0 svc-check flex items-center justify-center" style="border:1px solid var(--border)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Pigmentação</p><p class="text-xs" style="color:var(--text-dim)">⏱ 30 min</p></div>
+          <p class="font-display" style="color:var(--gold)">R$ 50</p>
+        </div>
+        <div class="svc-card card p-3 mb-2 flex items-center gap-3 cursor-pointer" data-name="Sobrancelha" data-price="20" data-time="10" onclick="toggleSvc(this)">
+          <div class="w-5 h-5 rounded-md flex-shrink-0 svc-check flex items-center justify-center" style="border:1px solid var(--border)"></div>
+          <div class="flex-1"><p class="text-sm font-semibold">Sobrancelha</p><p class="text-xs" style="color:var(--text-dim)">⏱ 10 min</p></div>
+          <p class="font-display" style="color:var(--gold)">R$ 20</p>
+        </div>
+      </div>
+
+      <!-- STEP 3: Data/Hora -->
+      <div id="step-3" class="step-panel hidden">
+        <p class="text-xs font-semibold mb-2" style="color:var(--text-dim)">Escolha o dia</p>
+        <div class="flex gap-2 mb-4 overflow-x-auto scroll" id="day-row"></div>
+        <p class="text-xs font-semibold mb-2" style="color:var(--text-dim)">Horários disponíveis</p>
+        <div class="grid grid-cols-4 gap-2" id="time-grid"></div>
+      </div>
+
+      <!-- CONFIRMAÇÃO -->
+      <div id="step-confirm" class="step-panel hidden text-center pt-4">
+        <div class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style="background:var(--gold)">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#141108" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2 class="font-display text-xl font-semibold mb-1" id="confirm-title">Agendamento confirmado!</h2>
+        <p class="text-xs mb-5" style="color:var(--text-dim)">Você vai receber um lembrete antes do horário</p>
+        <div class="card p-4 text-left mb-4">
+          <div class="flex justify-between text-sm mb-2"><span style="color:var(--text-dim)">Profissional</span><span class="font-semibold" id="rc-pro">—</span></div>
+          <div class="flex justify-between text-sm mb-2"><span style="color:var(--text-dim)">Serviços</span><span class="font-semibold text-right" id="rc-svc">—</span></div>
+          <div class="flex justify-between text-sm mb-2"><span style="color:var(--text-dim)">Data e hora</span><span class="font-semibold" id="rc-datetime">—</span></div>
+          <div class="border-t my-2" style="border-color:var(--border)"></div>
+          <div class="flex justify-between text-sm"><span style="color:var(--text-dim)">Total</span><span class="font-display text-lg" style="color:var(--gold)" id="rc-total">R$ 0</span></div>
+        </div>
+        <button class="w-full py-2.5 mb-2 btn-ghost text-sm">Adicionar ao calendário</button>
+        <button onclick="goTo('home')" class="w-full py-2.5 btn-gold text-sm">Voltar ao início</button>
+      </div>
+    </div>
+
+    <!-- Barra resumo fixa -->
+    <div id="summary-bar" class="px-5 py-3 flex-shrink-0" style="border-top:1px solid var(--border); background:var(--surface)">
+      <div class="flex items-center justify-between mb-2 text-xs" style="color:var(--text-dim)">
+        <span id="sum-line">Selecione um profissional</span>
+        <span class="font-display text-base" style="color:var(--gold)" id="sum-total">R$ 0</span>
+      </div>
+      <button id="next-btn" onclick="nextStep()" class="w-full py-3 btn-gold text-sm opacity-40 pointer-events-none">Continuar</button>
+    </div>
+  </section>
+
+  <!-- ===================== ASSINATURA ===================== -->
+  <section id="screen-assinatura" class="screen">
+    <div class="pole-stripe"></div>
+    <div class="scroll flex-1 px-5 pt-6 pb-6">
+      <div class="flex items-center justify-between mb-1">
+        <h1 class="font-display text-2xl font-semibold">Assinatura</h1>
+        <button onclick="toggleSubStatus()" class="text-[10px] px-2 py-1 rounded-full btn-ghost">demo: alternar</button>
+      </div>
+
+      <!-- Estado: não assinante -->
+      <div id="sub-guest">
+        <p class="text-sm mb-6" style="color:var(--text-dim)">Corte sempre em dia, sem pensar em preço. Escolha um plano recorrente.</p>
+
+        <div class="card p-4 mb-3">
+          <p class="text-sm font-semibold">Essencial</p>
+          <p class="text-xs mb-3" style="color:var(--text-dim)">2 cortes por mês</p>
+          <p class="font-display text-2xl mb-3" style="color:var(--gold)">R$ 99<span class="text-xs" style="color:var(--text-dim)">/mês</span></p>
+          <button class="w-full py-2 btn-ghost text-sm" onclick="subscribe('Essencial')">Assinar</button>
+        </div>
+
+        <div class="card p-4 mb-3 relative" style="border-color:var(--gold)">
+          <span class="absolute -top-2.5 right-4 text-[10px] px-2 py-0.5 rounded-full font-bold" style="background:var(--gold); color:#141108">MAIS POPULAR</span>
+          <p class="text-sm font-semibold">Completo</p>
+          <p class="text-xs mb-3" style="color:var(--text-dim)">2 cortes + 2 barbas por mês</p>
+          <p class="font-display text-2xl mb-3" style="color:var(--gold)">R$ 159<span class="text-xs" style="color:var(--text-dim)">/mês</span></p>
+          <button class="w-full py-2 btn-gold text-sm" onclick="subscribe('Completo')">Assinar</button>
+        </div>
+
+        <div class="card p-4 mb-3">
+          <p class="text-sm font-semibold">VIP</p>
+          <p class="text-xs mb-3" style="color:var(--text-dim)">Ilimitado + 15% off em produtos</p>
+          <p class="font-display text-2xl mb-3" style="color:var(--gold)">R$ 249<span class="text-xs" style="color:var(--text-dim)">/mês</span></p>
+          <button class="w-full py-2 btn-ghost text-sm" onclick="subscribe('VIP')">Assinar</button>
+        </div>
+      </div>
+
+      <!-- Estado: assinante ativo -->
+      <div id="sub-active" class="hidden">
+        <div class="rounded-2xl p-4 mb-4" style="background:linear-gradient(120deg,#2a2115,#0D0D0D 70%); border:1px solid var(--gold)">
+          <div class="flex items-center gap-2 mb-1">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+            <p class="font-display text-lg font-semibold" style="color:var(--gold-soft)" id="active-plan-name">Plano Completo</p>
+          </div>
+          <p class="text-xs" style="color:var(--text-dim)">Renova em 12 de agosto</p>
+        </div>
+
+        <div class="card p-4 mb-4">
+          <p class="text-xs font-semibold mb-2">Uso do mês</p>
+          <div class="flex justify-between text-xs mb-1"><span style="color:var(--text-dim)">Cortes</span><span>1 de 2 usados</span></div>
+          <div class="h-1.5 rounded-full mb-3" style="background:var(--border)"><div class="h-1.5 rounded-full" style="width:50%; background:var(--gold)"></div></div>
+          <div class="flex justify-between text-xs mb-1"><span style="color:var(--text-dim)">Barbas</span><span>0 de 2 usados</span></div>
+          <div class="h-1.5 rounded-full" style="background:var(--border)"><div class="h-1.5 rounded-full" style="width:0%; background:var(--gold)"></div></div>
+        </div>
+
+        <button onclick="goTo('agendar')" class="w-full py-3 btn-gold text-sm mb-5">Agendar usando meu plano</button>
+
+        <p class="text-xs font-semibold mb-2" style="color:var(--text-dim)">Gerenciar assinatura</p>
+        <div class="card divide-y" style="border-color:var(--border)">
+          <button class="w-full text-left px-4 py-3 text-sm flex justify-between items-center" style="border-color:var(--border)">Trocar de plano <span style="color:var(--text-dim)">›</span></button>
+          <button class="w-full text-left px-4 py-3 text-sm flex justify-between items-center" style="border-color:var(--border)">Forma de pagamento <span style="color:var(--text-dim)">›</span></button>
+          <button onclick="openCancelSubModal()" class="w-full text-left px-4 py-3 text-sm flex justify-between items-center" style="color:#e08585">Cancelar assinatura <span>›</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PERFIL ===================== -->
+  <section id="screen-perfil" class="screen">
+    <div class="pole-stripe"></div>
+    <div class="scroll flex-1 px-5 pt-6 pb-6">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-16 h-16 rounded-full" style="background:linear-gradient(135deg,var(--gold),#7a5c25)"></div>
+        <div>
+          <h1 class="font-display text-xl font-semibold">Mateus Silva</h1>
+          <span class="text-[10px] px-2 py-0.5 rounded-full font-semibold" style="background:rgba(201,161,90,.15); color:var(--gold)">Cliente Ouro</span>
+        </div>
+      </div>
+
+      <!-- Fidelidade -->
+      <div class="card p-4 mb-5 flex items-center gap-4">
+        <svg class="ring" width="64" height="64" viewBox="0 0 64 64">
+          <circle cx="32" cy="32" r="28" fill="none" stroke="var(--border)" stroke-width="6"/>
+          <circle cx="32" cy="32" r="28" fill="none" stroke="var(--gold)" stroke-width="6" stroke-linecap="round" stroke-dasharray="175.9" stroke-dashoffset="35"/>
+        </svg>
+        <div>
+          <p class="text-sm font-semibold">8 de 10 cortes</p>
+          <p class="text-xs" style="color:var(--text-dim)">Faltam 2 para seu corte grátis</p>
+        </div>
+      </div>
+
+      <p class="text-sm font-semibold mb-3">Histórico de cortes</p>
+      <div class="space-y-2 mb-6">
+        <div class="card p-3 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-lg flex-shrink-0" style="background:linear-gradient(135deg,#3a3a3a,#1a1a1a)"></div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold">Corte Degradê + Barba</p>
+            <p class="text-xs" style="color:var(--text-dim)">Renan · 12 jun · R$ 105</p>
+          </div>
+          <button class="text-xs px-2 py-1 btn-ghost">Repetir</button>
+        </div>
+        <div class="card p-3 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-lg flex-shrink-0" style="background:linear-gradient(135deg,#2a3a4a,#1a1a1a)"></div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold">Pigmentação</p>
+            <p class="text-xs" style="color:var(--text-dim)">Diego · 24 mai · R$ 50</p>
+          </div>
+          <button class="text-xs px-2 py-1 btn-ghost">Repetir</button>
+        </div>
+        <div class="card p-3 flex items-center gap-3">
+          <div class="w-11 h-11 rounded-lg flex-shrink-0" style="background:linear-gradient(135deg,#3a2a3a,#1a1a1a)"></div>
+          <div class="flex-1">
+            <p class="text-sm font-semibold">Corte Degradê</p>
+            <p class="text-xs" style="color:var(--text-dim)">Bruno · 30 abr · R$ 60</p>
+          </div>
+          <button class="text-xs px-2 py-1 btn-ghost">Repetir</button>
+        </div>
+      </div>
+
+      <p class="text-sm font-semibold mb-3">Conta</p>
+      <div class="card divide-y" style="border-color:var(--border)">
+        <button class="w-full text-left px-4 py-3 text-sm flex justify-between items-center">Meus dados <span style="color:var(--text-dim)">›</span></button>
+        <button class="w-full text-left px-4 py-3 text-sm flex justify-between items-center">Formas de pagamento <span style="color:var(--text-dim)">›</span></button>
+        <button class="w-full text-left px-4 py-3 text-sm flex justify-between items-center">Preferências e lembretes <span style="color:var(--text-dim)">›</span></button>
+        <button class="w-full text-left px-4 py-3 text-sm flex justify-between items-center">Falar com a barbearia <span style="color:var(--text-dim)">›</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BOTTOM NAV ===================== -->
+  <nav class="absolute bottom-0 left-0 right-0 flex justify-around items-center py-3" style="background:var(--surface); border-top:1px solid var(--border)">
+    <button onclick="goTo('home')" class="tab-btn active flex flex-col items-center gap-1" data-tab="home">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      <span class="tab-dot"></span>
+    </button>
+    <button onclick="goTo('agendar')" class="tab-btn flex flex-col items-center gap-1" data-tab="agendar">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      <span class="tab-dot"></span>
+    </button>
+    <button onclick="goTo('assinatura')" class="tab-btn flex flex-col items-center gap-1" data-tab="assinatura">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.5 5.5 21l2-7.5L2 9h7z"/></svg>
+      <span class="tab-dot"></span>
+    </button>
+    <button onclick="goTo('perfil')" class="tab-btn flex flex-col items-center gap-1" data-tab="perfil">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      <span class="tab-dot"></span>
+    </button>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
