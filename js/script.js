@@ -1,11 +1,9 @@
-// ---------- Navegação principal ----------
-  function goTo(name){
+function goTo(name){
     document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
     document.getElementById('screen-'+name).classList.add('active');
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
   }
 
-  // ---------- Estado do agendamento ----------
   let booking = { pro:null, services:[], day:null, time:null, isReschedule:false };
   let currentStep = 1;
 
@@ -63,7 +61,7 @@
         updateSummary();
       };
       dayRow.appendChild(div);
-      if(i===1) div.click(); // seleciona "amanhã" por padrão
+      if(i===1) div.click();
     }
 
     const timeGrid = document.getElementById('time-grid');
@@ -156,7 +154,6 @@
     showToast('Escolha o novo dia e horário');
   }
 
-  // ---------- Assinatura ----------
   function toggleSubStatus(){
     document.getElementById('sub-guest').classList.toggle('hidden');
     document.getElementById('sub-active').classList.toggle('hidden');
@@ -170,7 +167,6 @@
   function openCancelSubModal(){ showToast('Que tal pausar por 1 mês em vez de cancelar?'); }
   function openCancelModal(){ showToast('Agendamento cancelado'); }
 
-  // ---------- Toast ----------
   let toastTimer;
   function showToast(msg){
     const t = document.getElementById('toast');
@@ -180,6 +176,5 @@
     toastTimer = setTimeout(()=>t.classList.remove('show'), 2400);
   }
 
-  // ---------- Init ----------
   document.querySelectorAll('#step-1 .pro-card').forEach(c=>c.classList.add('pro-card'));
   renderStep();
